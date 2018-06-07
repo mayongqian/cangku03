@@ -14,7 +14,7 @@ def run():
 
         page = requests.get(WEB_URL)
 
-        if page.status_code == 200 and page.content.decode("utf-8").find('<title>CSDN.NET - CSDN-专业IT技术社区</title>') >= 0:
+        if page.status_code == 200 and page.content.decode("utf-8").find('<title>CSDN-专业IT技术社区</title>') >= 0:
 
             print("CSDN is working great :)")
 
