@@ -1,9 +1,14 @@
+# coding=utf-8
+import smtplib
+from email.mime.text import MIMEText
+
 import requests
 import sys
 import json
 import logging
 import datetime
 import traceback
+
 MonitorSnithStatus = {"OK": 'OK', "WARN": 'WARN', "CRITICAL": 'CRITICAL'}
 
 PERIODS = {"TWO_HOUR": "TWO_HOUR",
@@ -141,6 +146,32 @@ def run():
         if page.status_code == 200 and page.content.decode("utf-8").find('<title>CSDN.NET - 全球最大中文IT社区，为IT专业技术人员提供最全面的信息传播和服务平台</title>'):
             print("CSDN is working great :)")
             check_csdn("OK")
+          
+msg_from = '1321692006@qq.com'  # 发送方邮箱
+passwd = 'nwblnqbqvbdfijji'  # 填入发送方邮箱的授权码
+msg_to = '2802370278@qq.com'  # 收件人邮箱
+
+subject = "服务异常"  # 主题
+content = "主页被篡改，请及时进行处理！"  # 正文
+msg = MIMEText(content)
+msg['Subject'] = subject
+msg['From'] = msg_from
+msg['To'] = msg_to
+try:
+    s = smtplib.SMTP_SSL("smtp.qq.com", 465) # 邮件服务器及端口号
+    s.login(msg_from, passwd)
+    s.sendmail(msg_from, msg_to, msg.as_string())
+    print "发送成功"
+except s.SMTPException, e:
+    print "发送失败"
+finally:
+    s.quit()
+                      
+                      
+                      
+                      
+                      
+                      
         else:
             print("It looks like CSDN is having trouble, some one please take a look at it")
             check_csdn("OK")
