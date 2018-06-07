@@ -6,7 +6,7 @@ import pprint
 
 import os
 
-
+#对CPU的监测
 def CPUinfo():
     ''' Return the information in /proc/cpuinfo
 
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     for processor in CPUinfo.keys():
         print(CPUinfo[processor]['model name'])
-
+#对系统负载监测
 
 def load_stat():
     loadavg = {}
@@ -83,7 +83,7 @@ def load_stat():
 
 
 print("loadavg", load_stat()['lavg_15'])
-
+#对内存信息的监测
 
 def meminfo():
     ''' Return the information in /proc/meminfo
