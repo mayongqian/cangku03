@@ -17,7 +17,7 @@ def run():
 
         if page.status_code == 200 and page.content.decode("utf-8").find('<title>太原理工大学-教务处</title>') >= 0:
 
-            print(" is working great :)")
+            print(" TYUT is working great :)")
 
         else:
 
