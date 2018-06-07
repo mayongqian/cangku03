@@ -1,14 +1,10 @@
-# coding=utf-8
-import smtplib
-from email.mime.text import MIMEText
-
+import yagmail
 import requests
 import sys
 import json
 import logging
 import datetime
 import traceback
-
 MonitorSnithStatus = {"OK": 'OK', "WARN": 'WARN', "CRITICAL": 'CRITICAL'}
 
 PERIODS = {"TWO_HOUR": "TWO_HOUR",
@@ -131,11 +127,11 @@ def snitch_with_return(func):
     return wrapper
 
 #==================================================================================================================
-WEB_URL = 'http://www.csdn.net/'
+WEB_URL = 'https://www.csdn.net/'
 
 
 @snitch_with_return
-def check_csdn(status, message=None):
+def check_tyut(status, message=None):
     return {"status": status,
             "messaage": message}
 
@@ -143,44 +139,19 @@ def check_csdn(status, message=None):
 def run():
     try:
         page = requests.get(WEB_URL)
-        if page.status_code == 200 and page.content.decode("utf-8").find('<title>CSDN.NET - 全球最大中文IT社区，为IT专业技术人员提供最全面的信息传播和服务平台</title>'):
+        if page.status_code == 200 and page.content.decode("utf-8").find('<title>CSDN-专业IT技术社区</title>'):
             print("CSDN is working great :)")
-            check_csdn("OK")
-          
-msg_from = '1321692006@qq.com'  # 发送方邮箱
-passwd = 'nwblnqbqvbdfijji'  # 填入发送方邮箱的授权码
-msg_to = '2802370278@qq.com'  # 收件人邮箱
-
-subject = "服务异常"  # 主题
-content = "主页被篡改，请及时进行处理！"  # 正文
-msg = MIMEText(content)
-msg['Subject'] = subject
-msg['From'] = msg_from
-msg['To'] = msg_to
-try:
-    s = smtplib.SMTP_SSL("smtp.qq.com", 465) # 邮件服务器及端口号
-    s.login(msg_from, passwd)
-    s.sendmail(msg_from, msg_to, msg.as_string())
-    print "发送成功"
-except s.SMTPException, e:
-    print "发送失败"
-finally:
-    s.quit()
-                      
-                      
-                      
-                      
-                      
-                      
+            check_tyut("OK")
         else:
             print("It looks like CSDN is having trouble, some one please take a look at it")
-            check_csdn("OK")
+            check_tyut("OK")
             sys.exit(-1)
     except:
         print("It looks like CSDN is having trouble, some one please take a look at it")
-        check_csdn(status="CRITICAL", message=str(traceback.print_exc()))
+        yag = yagmail.SMTP(user = '1321692006@qq.com', password = 'nwblnqbqvbdfijji', host = 'smtp.qq.com')
+        yag.send(to = ['2802370278@qq.com'], subject = 'TROUBLE', contents = ['uu'])
+		check_tyut(status="CRITICAL", message=str(traceback.print_exc()))
         sys.exit(-1)
-
 
 if __name__ == '__main__':
     run()
