@@ -6,8 +6,12 @@ import pprint
 
 import os
 
-#对CPU的监测
+import sys
+
+import time
+
 def CPUinfo():
+
     ''' Return the information in /proc/cpuinfo
 
     as a dictionary in the following format:
@@ -15,12 +19,13 @@ def CPUinfo():
     CPU_info['proc0']={...}
 
     CPU_info['proc1']={...}
-
     '''
 
-    CPUinfo = OrderedDict()
+    CPUinfo=OrderedDict()
 
-    procinfo = OrderedDict()
+    procinfo=OrderedDict()
+
+
 
     nprocs = 0
 
@@ -34,33 +39,35 @@ def CPUinfo():
 
                 CPUinfo['proc%s' % nprocs] = procinfo
 
-                nprocs = nprocs + 1
+                nprocs=nprocs+1
+             # Reset
 
-                # Reset
-
-                procinfo = OrderedDict()
+                procinfo=OrderedDict()
 
             else:
-        if len(line.split(':')) == 2:
 
-            procinfo[line.split(':')[0].strip()] = line.split(':')[1].strip()
+                if len(line.split(':')) == 2:
 
-        else:
+                    procinfo[line.split(':')[0].strip()] = line.split(':')[1].strip()
 
-            procinfo[line.split(':')[0].strip()] = ''
+                else:
+
+                    procinfo[line.split(':')[0].strip()] = ''
+
+
 
     return CPUinfo
 
 
-if __name__ == '__main__':
 
+if __name__=='__main__':
     CPUinfo = CPUinfo()
 
     for processor in CPUinfo.keys():
-        print(CPUinfo[processor]['model name'])
-#对系统负载监测
 
+        print(CPUinfo[processor]['model name'])
 def load_stat():
+
     loadavg = {}
 
     f = open("/proc/loadavg")
@@ -69,38 +76,43 @@ def load_stat():
 
     f.close()
 
-    loadavg['lavg_1'] = con[0]
+    loadavg['lavg_1']=con[0]
 
-    loadavg['lavg_5'] = con[1]
+    loadavg['lavg_5']=con[1]
 
-    loadavg['lavg_15'] = con[2]
+    loadavg['lavg_15']=con[2]
 
-    loadavg['nr'] = con[3]
-
-    loadavg['last_pid'] = con[4]
+    loadavg['nr']=con[3]
+    loadavg['last_pid']=con[4]
 
     return loadavg
 
-
-print("loadavg", load_stat()['lavg_15'])
-#对内存信息的监测
-
+print("loadavg",load_stat()['lavg_15'])
 def meminfo():
+
     ''' Return the information in /proc/meminfo
 
     as a dictionary '''
 
-    meminfo = OrderedDict()
+    meminfo=OrderedDict()
+
+
 
     with open('/proc/meminfo') as f:
+
         for line in f:
+
             meminfo[line.split(':')[0]] = line.split(':')[1].strip()
 
     return meminfo
 
 
-if __name__ == '__main__':
-    # print(meminfo())
+
+if __name__=='__main__':
+
+    #print(meminfo())
+
+
 
     meminfo = meminfo()
 
