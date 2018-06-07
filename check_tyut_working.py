@@ -15,7 +15,7 @@ def run():
 
         page = requests.get(WEB_URL)
 
-        if page.status_code == 200 and page.content.decode("utf-8").find('<title>太原理工大学-教务处</title>') >= 0:
+        if page.status_code == 200 and page.content.decode("utf-8").find('<title>太原理DE 工大学-教务处</title>') >= 0:
 
             print(" TYUT is working great :)")
 
