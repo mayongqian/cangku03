@@ -29,7 +29,7 @@ def run():
 
         print("It looks like CSDN is having trouble, some one please take a look at it")
         yag = yagmail.SMTP(user = '1321692006@qq.com', password = 'nwblnqbqvbdfijji', host = 'smtp.qq.com')
-        yag.send(to = ['2802370278@qq.com'], subject = '构建异常', contents = ['The home page is tampered with, please handle it in time'])
+        yag.send(to = ['2802370278@qq.com'], subject = '服务异常', contents = ['The home page is tampered with, please handle it in time'])
         sys.exit(-1)
 if __name__ == '__main__':
 
