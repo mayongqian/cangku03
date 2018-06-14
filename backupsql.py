@@ -10,5 +10,5 @@ connect = pymysql.connect(
     )
 conn = connect.cursor()
 key="1234"
-path = "/var/lib/jenkins/Backupfile/backsql"
+path = "/var/lib/jenkins/Backupfile/backup"
 os.system("mysql -u root -p%s keshe project> %s.sql" % (key,path))
