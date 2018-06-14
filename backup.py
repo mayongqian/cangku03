@@ -5,7 +5,7 @@ import time
 source = ['/var/log/jenkins/jenkins.log']
 # If you are using Windows, use source =[r'C:\Documents', r'D:\Work'] or something like that
 # 2. The backup must be stored in a main backupdirectory
-target_dir='/var/lib/jenkins/Bakeupfile'
+target_dir='/var/lib/jenkins/Backupfile'
 # Remember to change thisto what you will be using
 # 3. The files are backed up into a zip file.
 # 4. The name of the zip archive is the current date andtime
